@@ -32,3 +32,16 @@ export const getCreatorsFrom = (series, country) => {
 
 export const sortByStartYear = (series) =>//העתקה עמוקה של כל המערך ומיון לפי תאריך
     [...series].sort((a ,b) => a.startYear - b.startYear)
+
+export const renameSeries = (series, id, newTitle) =>
+    series.map((show) => id === show.id?{ ...show, title: newTitle}:show)//בודק אם המזהה נמצא באחת הסדרות ומשנה את השם, במידה ולא מחזיר את אותו האובייקט בלי שינוי
+
+export const addSeason = (series, showId, season) =>
+    series.map((show) => show.id === showId? {...show, seasons: [...show.seasons, season]}:show)
+
+export const addEpisode = (series, showId, seasonNumber, episode) =>
+    series.map((show) => show.id === showId?//מגיע לסדרה עם המזהה המבוקש
+    {...show, seasons: show.seasons.map((season) => season.number === seasonNumber?//יוצר עותק של הסדרה ומגיע לעונה עם המספר המבוקש
+    {...season, episodes: [...season.episodes, episode]}:season)}: show)//יוצר עותק של העונה ומוסיף את הפרק למערך הפרקים שלה, במידה ולא מחזיר את אותה העונה
+
+    
